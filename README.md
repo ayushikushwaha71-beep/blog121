@@ -1,48 +1,196 @@
-# Inkwell — AI-Powered Blogging Platform
+# 📝 AI-Powered Blogging Platform
 
-Production-ready blog with **Supabase Auth**, **role-based access** (viewer / author / admin), and **Google Gemini** AI summaries (~200 words) generated automatically on every post.
+## 🚀 Overview
 
-## Stack
-- Next.js 14 (App Router)
-- Supabase (Auth + Postgres + RLS)
-- Google Gemini (`gemini-2.0-flash`)
-- Tailwind CSS + shadcn/ui
+This is a **full-stack blogging platform** built using modern web technologies.
+The application allows users to create, read, and manage blog posts with **role-based access control** and **AI-generated summaries**.
 
-## 1. Database setup (one-time)
-Open Supabase → SQL editor → paste the contents of [`SUPABASE_SETUP.sql`](./SUPABASE_SETUP.sql) and **Run**. This creates `profiles`, `posts`, `comments`, the auto-profile trigger, and all RLS policies.
+---
 
-After signing up your first account, promote yourself to admin:
-```sql
-update public.profiles set role = 'admin' where email = 'you@example.com';
-```
+## 🎯 Features
 
-## 2. Environment variables (`.env`)
-```
-NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
-GEMINI_API_KEY=<google ai studio key>
-```
+### 👤 User Roles
 
-## 3. Run
+* **Author**
+
+  * Create blog posts
+  * Edit their own posts
+  * View comments on their posts
+
+* **Viewer**
+
+  * Read blog posts
+  * View AI-generated summaries
+  * Comment on posts
+
+* **Admin**
+
+  * View all posts
+  * Edit any post
+  * Monitor comments
+
+---
+
+### 📝 Blog Features
+
+* Create, edit, and display blog posts
+* Featured image support
+* Comments system
+* Search functionality
+* Pagination for post listing
+
+---
+
+### 🤖 AI Integration
+
+* Automatically generates a **~200-word summary** when a post is created
+* Uses **Google AI API**
+* Summary is stored in database to avoid repeated API calls
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend + Backend:** Next.js
+* **Authentication:** Supabase Auth
+* **Database:** Supabase
+* **AI Integration:** Google AI API
+* **Styling:** Tailwind CSS
+* **Version Control:** Git + GitHub
+* **Deployment:** Vercel
+
+---
+
+## 🗄️ Database Schema
+
+### Users
+
+* id
+* name
+* email
+* role
+
+### Posts
+
+* id
+* title
+* body
+* image_url
+* author_id
+* summary
+
+### Comments
+
+* id
+* post_id
+* user_id
+* comment_text
+
+---
+
+## 🔐 Authentication Flow
+
+* Users sign up/login using Supabase Auth
+* Each user is assigned a role
+* Role-based access is enforced for all actions
+
+---
+
+## ⚙️ Key Functionalities
+
+### 📝 Post Creation Flow
+
+1. Author submits blog form
+2. Backend API receives request
+3. Google AI generates summary
+4. Post + summary stored in database
+
+---
+
+### 🤖 AI Summary Flow
+
+Post → API → Google AI → Summary → Database → Display
+
+---
+
+## 💸 Cost Optimization
+
+* Summary generated **only once per post**
+* Stored in database to avoid repeated API calls
+* Optimized prompts to reduce token usage
+
+---
+
+## 🐞 Challenges & Fixes
+
+**Issue:** AI summary was not generating
+**Cause:** Environment variables not configured properly
+**Fix:** Corrected `.env` setup and restarted server
+
+---
+
+## 📦 Installation & Setup
+
 ```bash
-yarn install
-yarn dev
+git clone https://github.com/your-username/blogging-platform.git
+cd blogging-platform
+npm install
+npm run dev
 ```
 
-## Roles
-- `viewer` (default) — read posts, post comments
-- `author` — create & edit own posts
-- `admin` — edit any post, delete comments, manage user roles
+---
 
-## Architecture
+## 🔑 Environment Variables
+
+Create a `.env.local` file and add:
+
 ```
-/app/                  Next.js routes (page.js, layout.js, login, signup, dashboard, create-post, post/[id], edit-post/[id])
-/app/api/[[...path]]/  Backend route — /api/generate-summary (Gemini)
-/components/           UI + AuthProvider + Navbar (client components)
-/lib/                  supabaseClient.js, gemini.js
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+GOOGLE_AI_API_KEY=your_api_key
 ```
 
-Client-side Supabase SDK enforces all auth/RLS. The only server-side endpoint is `/api/generate-summary` which keeps the Gemini key secret. Summaries are generated **once** at post creation; editing a post does **not** re-call Gemini.
+---
 
-## Deploy
-- Push to GitHub → Import in Vercel → Add env vars → Done.
+## 🚀 Deployment
+
+* Push code to GitHub
+* Connect repository to Vercel
+* Add environment variables
+* Deploy
+
+---
+
+## 🧠 AI Tools Used
+
+**Tool:** Cursor
+
+**Why Chosen:**
+
+* Fast development
+* Helps generate boilerplate code
+* Assists in debugging
+
+**How It Helped:**
+
+* Generated API routes
+* Assisted with Supabase integration
+* Improved development speed
+
+---
+
+## 📈 Key Learnings
+
+* Full-stack application development
+* Role-based access control
+* API integration
+* AI-based feature implementation
+
+---
+
+## 🙌 Conclusion
+
+This project demonstrates the ability to build a scalable full-stack system with AI integration and real-world features.
+
+--
+
